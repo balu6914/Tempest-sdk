@@ -38,7 +38,7 @@ export class CrocTokenView {
   }
 
   async approveRouter (approveQty?: TokenQty): Promise<TransactionResponse | undefined> {
-    let router = (await this.context).router
+    const router = (await this.context).router
     return router && this.approveAddr(router.address, approveQty)
   }
 
@@ -64,12 +64,12 @@ export class CrocTokenView {
   }
 
   async approveBypassRouter(): Promise<TransactionResponse | undefined> {
-    let router = (await this.context).router
+    const router = (await this.context).router
     if (!router) {
       return undefined
     }
 
-    let abiCoder = new ethers.utils.AbiCoder()
+    const abiCoder = new ethers.utils.AbiCoder()
     const MANY_CALLS = 1000000000
     const HOT_PROXY_IDX = 1
     const COLD_PROXY_IDX = 3
@@ -120,7 +120,7 @@ export class CrocTokenView {
 
   private truncFraction (qty: string | number, decimals: number): number {
     if (typeof(qty) === "number") {
-      let exp = Math.pow(10, decimals)
+      const exp = Math.pow(10, decimals)
       return Math.floor(qty * exp) / exp
     } else {
       return this.truncFraction(parseFloat(qty), decimals)
@@ -171,7 +171,7 @@ export class CrocTokenView {
         [subCode, recv, await weiQty, this.tokenAddr])
   
       const txArgs = useMsgVal ? { value: await weiQty } : { }
-      let cntx = await this.context
+      const cntx = await this.context
       return cntx.dex.userCmd(cntx.chain.proxyPaths.cold, cmd, txArgs)
   
   }

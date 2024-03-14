@@ -1,5 +1,4 @@
 import { BigNumber, ContractFunction } from "ethers";
-
 import { TransactionResponse } from '@ethersproject/providers';
 import { CrocContext } from './context';
 import { CrocPoolView } from './pool';
@@ -85,12 +84,12 @@ export class CrocSwapPlan {
 
   private async txBase() {
     if (this.callType === "router") {
-      let router = (await this.context).router
+      const router = (await this.context).router
       if (!router) { throw new Error("Router not available on network") }  
       return router
 
     } else if (this.callType === "bypass" && (await this.context).routerBypass) {
-      let router = (await this.context).routerBypass
+      const router = (await this.context).routerBypass
       if (!router) { throw new Error("Router not available on network") }
       return router || (await this.context).dex
       
@@ -130,8 +129,8 @@ export class CrocSwapPlan {
 
     const HOT_PROXY_IDX = 1
 
-    let abi = new AbiCoder()
-    let cmd = abi.encode(["address", "address", "uint256", "bool", "bool", "uint128", "uint16", "uint128", "uint128", "uint8"],
+    const abi = new AbiCoder()
+    const cmd = abi.encode(["address", "address", "uint256", "bool", "bool", "uint128", "uint16", "uint128", "uint128", "uint8"],
       [this.baseToken.tokenAddr, this.quoteToken.tokenAddr, (await this.context).chain.poolIndex,
        this.sellBase, this.qtyInBase, await this.qty, TIP, 
        await this.calcLimitPrice(), await this.calcSlipQty(), surplusFlags])
@@ -199,7 +198,7 @@ export class CrocSwapPlan {
   }
 
   private async buildTxArgs (surplusArg: number, gasEst?: BigNumber) {
-    let txArgs = await this.attachEthMsg(surplusArg)
+    const txArgs = await this.attachEthMsg(surplusArg)
 
     if (gasEst) {
       const GAS_PADDING = 15000

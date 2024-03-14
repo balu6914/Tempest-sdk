@@ -8,9 +8,9 @@ export class OrderDirective {
     }
 
     encodeBytes(): BytesLike {
-        let schema = encodeWord(LONG_FORM_SCHEMA_TYPE)
-        let open = encodeSettlement(this.open)
-        let hops = listEncoding(this.hops, encodeHop)
+        const schema = encodeWord(LONG_FORM_SCHEMA_TYPE)
+        const open = encodeSettlement(this.open)
+        const hops = listEncoding(this.hops, encodeHop)
         return ethers.utils.concat([schema, open, hops])
     }
 
@@ -64,7 +64,7 @@ export class OrderDirective {
     }
 
     appendRangeBurn (lowTick: number, highTick: number, liq: BigNumberish): ConcentratedDirective {
-        let range = this.appendRangeMint(lowTick, highTick, liq)
+        const range = this.appendRangeMint(lowTick, highTick, liq)
         range.isAdd = false
         return range
     }
@@ -146,65 +146,65 @@ export interface ConcentratedDirective {
 
 
 function encodeSettlement (dir: SettlementDirective): BytesLike {
-    let token = encodeToken(dir.token)
-    let limit = encodeSigned(dir.limitQty)
-    let dust = encodeFull(dir.dustThresh)
-    let reserveFlag = encodeWord(dir.useSurplus ? 1 : 0)
+    const token = encodeToken(dir.token)
+    const limit = encodeSigned(dir.limitQty)
+    const dust = encodeFull(dir.dustThresh)
+    const reserveFlag = encodeWord(dir.useSurplus ? 1 : 0)
     return ethers.utils.concat([token, limit, dust, reserveFlag])
 }
 
 function encodeHop (hop: HopDirective): BytesLike {
-    let pools = listEncoding(hop.pools, encodePool)
-    let settle = encodeSettlement(hop.settlement)
-    let improve = encodeImprove(hop.improve)
+    const pools = listEncoding(hop.pools, encodePool)
+    const settle = encodeSettlement(hop.settlement)
+    const improve = encodeImprove(hop.improve)
     return ethers.utils.concat([pools, settle, improve])
 }
 
 function encodeImprove (improve: ImproveDirective): BytesLike {
-    let abiCoder = new ethers.utils.AbiCoder()
+    const abiCoder = new ethers.utils.AbiCoder()
     return abiCoder.encode(["bool", "bool"], [improve.isEnabled, improve.useBaseSide])
 }
 
 function encodeChain (chain: ChainingDirective): BytesLike {
-    let abiCoder = new ethers.utils.AbiCoder()
+    const abiCoder = new ethers.utils.AbiCoder()
     return abiCoder.encode(["bool", "bool", "bool"], [chain.rollExit, chain.swapDefer, chain.offsetSurplus])
 }
 
 function encodePool (pool: PoolDirective): BytesLike {
-    let poolIdx = encodeFull(pool.poolIdx)
-    let passive = encodePassive(pool.passive)
-    let swap = encodeSwap(pool.swap)
-    let chain = encodeChain(pool.chain)
+    const poolIdx = encodeFull(pool.poolIdx)
+    const passive = encodePassive(pool.passive)
+    const swap = encodeSwap(pool.swap)
+    const chain = encodeChain(pool.chain)
     return ethers.utils.concat([poolIdx, passive, swap, chain])
 }
 
 function encodeSwap (swap: SwapDirective): BytesLike {
-    let abiCoder = new ethers.utils.AbiCoder()
+    const abiCoder = new ethers.utils.AbiCoder()
     return abiCoder.encode(["bool", "bool", "uint8", "uint128", "uint128"],
         [swap.isBuy, swap.inBaseQty, swap.rollType ? swap.rollType : 0, swap.qty, swap.limitPrice])
 }
 
 function encodePassive (passive: PassiveDirective): BytesLike {
-    let ambAdd = encodeBool(passive.ambient.isAdd)
-    let rollType = encodeWord(passive.ambient.rollType ? passive.ambient.rollType : 0)
-    let ambLiq = encodeFull(passive.ambient.liquidity)
-    let conc = listEncoding(passive.concentrated, encodeConc)
+    const ambAdd = encodeBool(passive.ambient.isAdd)
+    const rollType = encodeWord(passive.ambient.rollType ? passive.ambient.rollType : 0)
+    const ambLiq = encodeFull(passive.ambient.liquidity)
+    const conc = listEncoding(passive.concentrated, encodeConc)
     return ethers.utils.concat([ambAdd, rollType, ambLiq, conc])
 }
 
 function encodeConc (conc: ConcentratedDirective): BytesLike {
-    let openTick = encodeJsSigned(conc.lowTick)
-    let closeTick = encodeJsSigned(conc.highTick)
-    let isRelTick = encodeBool(conc.isRelTick)
-    let isAdd = encodeBool(conc.isAdd)
-    let rollType = encodeWord(conc.rollType ? conc.rollType : 0)
-    let liq = encodeFull(conc.liquidity)
+    const openTick = encodeJsSigned(conc.lowTick)
+    const closeTick = encodeJsSigned(conc.highTick)
+    const isRelTick = encodeBool(conc.isRelTick)
+    const isAdd = encodeBool(conc.isAdd)
+    const rollType = encodeWord(conc.rollType ? conc.rollType : 0)
+    const liq = encodeFull(conc.liquidity)
     return ethers.utils.concat([openTick, closeTick, isRelTick, isAdd, rollType, liq])
 }
 
 function listEncoding<T> (elems: T[], encoderFn: (x: T) => BytesLike): BytesLike {
-    let count = encodeWord(elems.length)
-    let vals = elems.map(encoderFn)
+    const count = encodeWord(elems.length)
+    const vals = elems.map(encoderFn)
     return ethers.utils.concat([count].concat(vals))
 }
 
@@ -213,12 +213,12 @@ function encodeToken (tokenAddr: BytesLike): BytesLike {
 }
 
 function encodeFull (val: BigNumberish): BytesLike {
-    let abiCoder = new ethers.utils.AbiCoder()
+    const abiCoder = new ethers.utils.AbiCoder()
     return abiCoder.encode(["uint256"], [val]);
 }
 
 function encodeSigned (val: BigNumber): BytesLike {
-    let abiCoder = new ethers.utils.AbiCoder()
+    const abiCoder = new ethers.utils.AbiCoder()
     return abiCoder.encode(["int256"], [val]);
 }
 

@@ -51,7 +51,7 @@ async function setupProvider(
 ): Promise<CrocContext> {
   const actor = determineActor(provider, signer);
   const chainId = await getChain(provider);
-  let cntx = inflateContracts(chainId, provider, actor);
+  const cntx = inflateContracts(chainId, provider, actor);
   return await attachSenderAddr(cntx, actor)
 }
 
@@ -60,9 +60,11 @@ async function attachSenderAddr (cntx: CrocContext,
   if ('getAddress' in actor) {
     try {
       cntx.senderAddr = await actor.getAddress()
-    } catch (e) { }
+    } catch (e) {
+      //Handle potential error here
+     }
   }
-  return cntx
+  return cntx;
 }
 
 function determineActor(
@@ -77,7 +79,7 @@ function determineActor(
     }
   } else if ("getSigner" in provider) {
     try {
-      let signer = (provider as ethers.providers.Web3Provider).getSigner();
+      const signer = (provider as ethers.providers.Web3Provider).getSigner();
       return signer
     } catch { 
       return provider 

@@ -21,9 +21,9 @@
     "outDir": "./dist/",
     "types": ["node", "jest"],
     "lib": ["ES2016", "DOM"],
-    "baseUrl": "./src", // Add this line to set the base directory for module resolution
+    "baseUrl": "./src",
     "paths": {
-      "@/*": ["*"] // Add this line for path mapping, adjust as needed
+      "@/*": ["*"]
     }
   },
   "include": ["src/**/*.ts"],

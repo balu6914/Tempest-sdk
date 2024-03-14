@@ -13,33 +13,33 @@ export class CrocPositionView {
     }
 
     async queryRangePos (lowerTick: number, upperTick: number, block?: BlockTag) {
-        let blockArg = toCallArg(block)
-        let context = await this.context
+        const blockArg = toCallArg(block)
+        const context = await this.context
         return context.query.queryRangePosition(this.owner, 
             this.baseToken.tokenAddr, this.quoteToken.tokenAddr, 
             context.chain.poolIndex, lowerTick, upperTick, blockArg)
     }
 
     async queryAmbient (block?: BlockTag) {
-        let blockArg = toCallArg(block)
-        let context = await this.context
+        const blockArg = toCallArg(block)
+        const context = await this.context
         return context.query.queryAmbient(this.owner, 
             this.baseToken.tokenAddr, this.quoteToken.tokenAddr, 
             context.chain.poolIndex, blockArg)
     }
 
     async queryAmbientPos (block?: BlockTag) {
-        let blockArg = toCallArg(block)
-        let context = await this.context
+        const blockArg = toCallArg(block)
+        const context = await this.context
         return context.query.queryAmbientTokens(this.owner, 
             this.baseToken.tokenAddr, this.quoteToken.tokenAddr, 
             context.chain.poolIndex, blockArg)
     }
 
     async queryKnockoutLivePos (isBid: boolean, lowerTick: number, upperTick: number, block?: BlockTag) {
-        let blockArg = toCallArg(block)
-        let context = await this.context
-        let pivotTick = isBid ? lowerTick : upperTick
+        const blockArg = toCallArg(block)
+        const context = await this.context
+        const pivotTick = isBid ? lowerTick : upperTick
         
         const pivotTime = (await context.query.queryKnockoutPivot(
             this.baseToken.tokenAddr, this.quoteToken.tokenAddr, 
@@ -51,8 +51,8 @@ export class CrocPositionView {
     }   
 
     async queryRewards (lowerTick: number, upperTick: number, block?: BlockTag) {
-        let blockArg = toCallArg(block)
-        let context = await this.context
+        const blockArg = toCallArg(block)
+        const context = await this.context
         return (await context.query.queryConcRewards(this.owner, 
             this.baseToken.tokenAddr, this.quoteToken.tokenAddr, 
             context.chain.poolIndex, lowerTick, upperTick, blockArg))

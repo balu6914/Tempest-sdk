@@ -16,7 +16,7 @@ test("getQuoteTokenAddress returns correct address when ETH compared with Dai on
 test("getBaseTokenAddress returns correct address when ETH compared with Dai on Kovan", () => {
   const daiKovanAddress = "0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa";
   const quoteAddress = getBaseTokenAddress(
-    AddressZero, 
+    AddressZero,
     daiKovanAddress
   );
   expect(quoteAddress).toBe(AddressZero);
@@ -25,11 +25,11 @@ test("getBaseTokenAddress returns correct address when ETH compared with Dai on 
 test("sortBaseQuoteTokens returns correct address array when ETH compared with Dai on Kovan when already correctly sorted", () => {
   const daiKovanAddress = "0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa";
   const addressArray = sortBaseQuoteTokens(
-    AddressZero, 
+    AddressZero,
     daiKovanAddress
   );
   expect(addressArray).toStrictEqual([
-    AddressZero, 
+    AddressZero,
     daiKovanAddress,
   ]);
 });
@@ -41,7 +41,7 @@ test("sortBaseQuoteTokens returns correct address array when ETH compared with D
     AddressZero
   );
   expect(addressArray).toStrictEqual([
-    AddressZero, 
+    AddressZero,
     daiKovanAddress,
   ]);
 });

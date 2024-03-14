@@ -12,10 +12,7 @@ import {
   toDisplayPrice,
   fromDisplayPrice,
 } from "../utils";
-import {
-  ambientPosSlot,
-  concPosSlot
-} from "../encoding/slots"
+import { ambientPosSlot, concPosSlot } from "../src/encoding/slots";
 import { BigNumber } from "ethers";
 import { AddressZero } from "@ethersproject/constants";
 

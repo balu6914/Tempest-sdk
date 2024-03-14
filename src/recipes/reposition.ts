@@ -58,29 +58,29 @@ export class CrocReposition {
     }
 
     async currentCollateral(): Promise<BigNumber> {
-        let tokenFn = await this.isBaseOutOfRange() ? baseTokenForConcLiq : quoteTokenForConcLiq
+        const tokenFn = await this.isBaseOutOfRange() ? baseTokenForConcLiq : quoteTokenForConcLiq
         return tokenFn(await this.spotPrice, this.liquidity, 
             tickToPrice(this.burnRange[0]),
             tickToPrice(this.burnRange[1]))
     }
 
     async convertCollateral(): Promise<BigNumber> {
-        let balance = await this.swapFraction()
-        let collat = await this.currentCollateral()
+        const balance = await this.swapFraction()
+        const collat = await this.currentCollateral()
         return collat.mul(balance).div(10000)
     }
 
     async postBalance(): Promise<[number, number]> {
-        let outside = this.mintInput().then(parseFloat)
-        let inside = this.swapOutput().then(parseFloat)
+        const outside = this.mintInput().then(parseFloat)
+        const inside = this.swapOutput().then(parseFloat)
         return await this.isBaseOutOfRange() ?
             [await outside, await inside] :
             [await inside, await outside]
     }
 
     async mintInput(): Promise<string> {
-        let collat = (await this.currentCollateral()).sub(await this.convertCollateral())
-        let pool = (await this.pool)
+        const collat = (await this.currentCollateral()).sub(await this.convertCollateral())
+        const pool = (await this.pool)
         return await this.isBaseOutOfRange() ?
             pool.baseToken.toDisplay(collat) :
             pool.quoteToken.toDisplay(collat)
@@ -89,14 +89,14 @@ export class CrocReposition {
     async swapOutput(): Promise<string> {
         const [sellToken, buyToken] = await this.pivotTokens()
         
-        let swap = new CrocSwapPlan(sellToken, buyToken, await this.convertCollateral(), 
+        const swap = new CrocSwapPlan(sellToken, buyToken, await this.convertCollateral(), 
             false, (await this.pool).context, { slippage: this.impact })
-        let impact = await swap.calcImpact()
+        const impact = await swap.calcImpact()
         return impact.buyQty
     }
 
     private async isBaseOutOfRange(): Promise<boolean> {
-        let spot = await this.spotTick
+        const spot = await this.spotTick
         if (spot >= this.burnRange[1]) {
             return true
         } else if (spot < this.burnRange[0]) {
@@ -115,9 +115,9 @@ export class CrocReposition {
     private async formatDirective(): Promise<OrderDirective> {
         const [openToken, closeToken] = await this.pivotTokens()
         
-        let directive = new OrderDirective(openToken.tokenAddr)
+        const directive = new OrderDirective(openToken.tokenAddr)
         directive.appendHop(closeToken.tokenAddr)
-        let pool = directive.appendPool((await this.pool.context).chain.poolIndex)
+        const pool = directive.appendPool((await this.pool.context).chain.poolIndex)
 
         directive.appendRangeBurn(this.burnRange[0], this.burnRange[1], this.liquidity)
         await this.setupSwap(pool)
@@ -125,10 +125,10 @@ export class CrocReposition {
         directive.appendPool((await this.pool.context).chain.poolIndex)
 
         if (this.mintRange === "ambient") {
-            let mint = directive.appendAmbientMint(0)
+            const mint = directive.appendAmbientMint(0)
             mint.rollType = 5
         } else {
-            let mint = directive.appendRangeMint(this.mintRange[0], this.mintRange[1], 0)
+            const mint = directive.appendRangeMint(this.mintRange[0], this.mintRange[1], 0)
             mint.rollType = 5
         }
 
@@ -151,7 +151,7 @@ export class CrocReposition {
     }
 
     private async swapFraction(): Promise<BigNumber> {
-        let swapProp = await this.balancePercent() + this.impact
+        const swapProp = await this.balancePercent() + this.impact
         return BigNumber.from(Math.floor(Math.min(swapProp, 1.0) * 10000))
     }
 

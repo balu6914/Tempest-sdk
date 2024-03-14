@@ -1,6 +1,5 @@
 import { BigNumber, ethers } from 'ethers';
 import { CrocContext } from './context';
-
 /* This is the main entry point for the Croc SDK. It provides a high-level interface
  * for interacting with CrocSwap smart contracts in an ergonomic way. */
 export class CrocSlotReader {
