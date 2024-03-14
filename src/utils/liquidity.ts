@@ -216,3 +216,4 @@ export function roundForConcLiq(liq: BigNumber): BigNumber {
   const CONC_LOTS_BITS = 11;
   return truncateRightBits(liq, CONC_LOTS_BITS);
 }
+

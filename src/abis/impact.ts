@@ -89,3 +89,4 @@ export const IMPACT_ABI = [
     "type": "function"
   }
 ]
+

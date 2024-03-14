@@ -131,3 +131,4 @@ export function lookupChain(chainId: number | string): ChainSpec {
     return context;
   }
 }
+

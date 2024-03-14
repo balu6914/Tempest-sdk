@@ -31,3 +31,4 @@ export class CrocSlotReader {
     readonly provider: Promise<ethers.providers.Provider>
     readonly dex: Promise<string>
 }
+

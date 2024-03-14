@@ -160,3 +160,4 @@ test("concentrated slot", () => {
 test("truncate right bits", () => {
   expect(truncateRightBits(BigNumber.from(48024845023), 10).toNumber()).toBe(48024844288)
 })
+

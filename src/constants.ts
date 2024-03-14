@@ -261,3 +261,4 @@ export const CHAIN_SPECS: { [chainId: string]: ChainSpec } = {
   "blast": BLAST_CHAIN,
   "blastSepolia": BLAST_SEPOLIA_CHAIN,
 };
+

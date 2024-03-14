@@ -64,3 +64,4 @@ export async function estimateScrollL1Gas(crocEnv: CrocEnv, rawTransaction: `0x$
   const l1Gas = await l1GasPriceOracle.getL1Fee(rawTransaction) as BigNumber;
   return l1Gas;
 }
+

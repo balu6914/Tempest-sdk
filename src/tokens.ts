@@ -212,3 +212,4 @@ export function sortBaseQuoteViews (tokenA: CrocTokenView, tokenB: CrocTokenView
   return tokenA.tokenAddr.toLowerCase() < tokenB.tokenAddr.toLowerCase() ?
     [tokenA, tokenB] : [tokenB, tokenA]
 }
+

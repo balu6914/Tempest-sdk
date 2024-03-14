@@ -13,3 +13,4 @@ module.exports = {
       "@typescript-eslint/no-inferrable-types": "off"
     }
 };
+

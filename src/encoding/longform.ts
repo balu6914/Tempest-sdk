@@ -238,3 +238,4 @@ function encodeBool (flag: boolean): BytesLike {
     return encodeWord(flag ? 1 : 0)
 }
 
+
